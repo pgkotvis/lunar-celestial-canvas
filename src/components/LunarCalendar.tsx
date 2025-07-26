@@ -95,14 +95,11 @@ export function LunarCalendar() {
 
         {/* Calendar */}
         {showCalendar && !isLoading && (
-          <div className="bg-card border border-border rounded-lg p-8 shadow-lunar">
+          <div className="bg-card border border-border p-8 shadow-lunar">
             <div className="text-center mb-8">
               <h2 className="text-xl font-light tracking-wider text-foreground font-mono">
                 {calendarTitle}
               </h2>
-              <p className="text-sm text-muted-foreground mt-2 hidden md:block">
-                Click on any day to see moon phase details
-              </p>
             </div>
             
             <LunarCalendarGrid

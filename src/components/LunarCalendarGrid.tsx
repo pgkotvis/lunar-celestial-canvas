@@ -105,7 +105,7 @@ export function LunarCalendarGrid({ year, latitude, longitude }: LunarCalendarGr
       {/* Tooltip */}
       {tooltip && (
         <div
-          className="fixed pointer-events-none z-50 bg-card border border-border rounded-md px-3 py-2 text-sm shadow-lg"
+          className="fixed pointer-events-none z-50 bg-card border border-border px-3 py-2 text-sm shadow-lg"
           style={{
             left: tooltip.x,
             top: tooltip.y
