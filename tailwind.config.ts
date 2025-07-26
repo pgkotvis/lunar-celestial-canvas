@@ -61,7 +61,21 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				lunar: {
+					glow: 'hsl(var(--lunar-glow))',
+					shadow: 'hsl(var(--lunar-shadow))',
+					surface: 'hsl(var(--lunar-surface))',
+					crater: 'hsl(var(--lunar-crater))'
 				}
+			},
+			backgroundImage: {
+				'gradient-lunar': 'var(--gradient-lunar)',
+				'gradient-moon': 'var(--gradient-moon)'
+			},
+			boxShadow: {
+				'lunar': 'var(--shadow-lunar)',
+				'glow': 'var(--shadow-glow)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
