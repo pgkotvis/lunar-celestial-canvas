@@ -53,13 +53,13 @@ export function LunarCalendarControls({
   };
 
   return (
-    <div className="flex flex-wrap gap-4 items-end justify-center mb-12 p-6 rounded-lg bg-card border">
+    <div className="flex flex-wrap gap-4 items-end justify-center mb-12 p-6 bg-card border">
       <div className="flex flex-col gap-2">
         <Label htmlFor="year" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
           Year
         </Label>
         <Select value={year.toString()} onValueChange={(value) => setYear(parseInt(value))}>
-          <SelectTrigger className="w-32 bg-lunar-surface border-border">
+          <SelectTrigger className="w-40 bg-lunar-surface border-border">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -103,7 +103,7 @@ export function LunarCalendarControls({
             setLatitude(parseFloat(e.target.value) || 0);
             handleCoordinateChange();
           }}
-          className="w-32 bg-lunar-surface border-border"
+          className="w-40 bg-lunar-surface border-border"
           placeholder="40.7128"
         />
       </div>
@@ -121,7 +121,7 @@ export function LunarCalendarControls({
             setLongitude(parseFloat(e.target.value) || 0);
             handleCoordinateChange();
           }}
-          className="w-32 bg-lunar-surface border-border"
+          className="w-40 bg-lunar-surface border-border"
           placeholder="-74.0060"
         />
       </div>
@@ -129,7 +129,7 @@ export function LunarCalendarControls({
       <Button 
         onClick={onGenerate} 
         disabled={isLoading}
-        className="px-6 py-2 font-medium tracking-wider uppercase bg-primary text-primary-foreground hover:bg-primary/90"
+        className="w-40 px-6 py-2 font-medium tracking-wider uppercase bg-primary text-primary-foreground hover:bg-primary/90"
       >
         {isLoading ? 'Generating...' : 'Generate'}
       </Button>
