@@ -58,17 +58,18 @@ export function LunarCalendarGrid({ year, latitude, longitude }: LunarCalendarGr
         ))}
       </div>
 
-      {/* Calendar Grid */}
+      {/* Calendar Grid: 12 columns (months) x maxDays rows (days) */}
       <div 
         className="grid grid-cols-12 gap-px bg-lunar-shadow p-px max-w-full mx-auto shadow-lunar"
         style={{ gridTemplateRows: `repeat(${maxDays}, 1fr)` }}
       >
-        {Array.from({length: 12}, (_, month) => {
-          const daysInMonth = getDaysInMonth(year, month);
+        {/* Generate grid: for each day (row) and each month (column) */}
+        {Array.from({length: maxDays}, (_, dayIndex) => {
+          const day = dayIndex + 1; // day 1-31
           
-          return Array.from({length: maxDays}, (_, dayIndex) => {
-            const day = dayIndex + 1;
-            const key = `${month}-${day}`;
+          return Array.from({length: 12}, (_, month) => {
+            const daysInMonth = getDaysInMonth(year, month);
+            const key = `day-${day}-month-${month}`;
             
             if (day <= daysInMonth) {
               const date = new Date(year, month, day);
@@ -89,6 +90,7 @@ export function LunarCalendarGrid({ year, latitude, longitude }: LunarCalendarGr
                 />
               );
             } else {
+              // Empty cell for months that don't have this day (e.g., Feb 30th)
               return (
                 <div
                   key={key}
