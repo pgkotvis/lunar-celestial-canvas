@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { LunarCalendarControls } from "./LunarCalendarControls";
 import { LunarCalendarGrid } from "./LunarCalendarGrid";
 import { getLocationName, PRESET_LOCATIONS } from "@/utils/lunar-calculations";
-
 export function LunarCalendar() {
   const [year, setYear] = useState(2025);
   const [latitude, setLatitude] = useState(40.7128);
@@ -11,23 +10,19 @@ export function LunarCalendar() {
   const [isLoading, setIsLoading] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const [calendarTitle, setCalendarTitle] = useState("");
-
   const generateCalendar = async () => {
     if (!year) {
       alert('Please select a valid year');
       return;
     }
-
     setIsLoading(true);
     setShowCalendar(false);
-
     try {
       // Small delay to show loading animation
       await new Promise(resolve => setTimeout(resolve, 100));
 
       // Update title based on location selection
       let titleText = year.toString();
-      
       if (selectedLocation !== 'custom') {
         // Find the selected city name
         const selectedOption = PRESET_LOCATIONS.find(loc => loc.value === selectedLocation);
@@ -43,7 +38,6 @@ export function LunarCalendar() {
           titleText += ` | ${latitude.toFixed(4)}°, ${longitude.toFixed(4)}°`;
         }
       }
-      
       setCalendarTitle(titleText);
       setShowCalendar(true);
     } catch (error) {
@@ -58,12 +52,10 @@ export function LunarCalendar() {
   useEffect(() => {
     generateCalendar();
   }, []);
-
-  return (
-    <div className="min-h-screen bg-gradient-lunar text-foreground">
+  return <div className="min-h-screen bg-gradient-lunar text-foreground">
       <div className="max-w-5xl mx-auto">
         {/* Header Section */}
-        <div className="px-4 sm:px-6 pt-12 sm:pt-20 pb-8 sm:pb-16">
+        <div className="px-4 sm:px-6 pt-12 sm:pt-20 pb-8 sm:pb-16 py-[28px]">
           <div className="text-center space-y-8 sm:space-y-12">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extralight tracking-[0.15em] text-foreground">
               Lunar Calendar
@@ -71,59 +63,26 @@ export function LunarCalendar() {
             
             {/* Controls */}
             <div className="max-w-sm mx-auto">
-              <LunarCalendarControls
-                year={year}
-                setYear={setYear}
-                latitude={latitude}
-                setLatitude={setLatitude}
-                longitude={longitude}
-                setLongitude={setLongitude}
-                selectedLocation={selectedLocation}
-                setSelectedLocation={setSelectedLocation}
-                onGenerate={generateCalendar}
-                isLoading={isLoading}
-              />
+              <LunarCalendarControls year={year} setYear={setYear} latitude={latitude} setLatitude={setLatitude} longitude={longitude} setLongitude={setLongitude} selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation} onGenerate={generateCalendar} isLoading={isLoading} />
             </div>
 
             {/* Calendar Title */}
-            {showCalendar && !isLoading && (
-              <div className="space-y-2">
-                <h2 className="text-xl sm:text-2xl font-light text-foreground">
-                  {calendarTitle.split(' | ')[0]} {/* Just year */}
-                </h2>
-                {calendarTitle.includes(' | ') && (
-                  <div className="space-y-1">
-                    <p className="text-base sm:text-lg text-muted-foreground">
-                      {calendarTitle.split(' | ')[1].split(' (')[0]} {/* Location name */}
-                    </p>
-                    <p className="text-xs text-muted-foreground/60 font-mono">
-                      {calendarTitle.match(/\(([^)]+)\)/)?.[1]} {/* Coordinates */}
-                    </p>
-                  </div>
-                )}
-              </div>
-            )}
+            {showCalendar && !isLoading && <div className="space-y-2">
+                
+                {calendarTitle.includes(' | ')}
+              </div>}
 
             {/* Loading State */}
-            {isLoading && (
-              <p className="text-muted-foreground font-light text-lg">
+            {isLoading && <p className="text-muted-foreground font-light text-lg">
                 Calculating lunar phases...
-              </p>
-            )}
+              </p>}
           </div>
         </div>
 
         {/* Calendar Display */}
-        {showCalendar && !isLoading && (
-          <div className="px-3 sm:px-6 pb-12 sm:pb-20">
-            <LunarCalendarGrid
-              year={year}
-              latitude={latitude}
-              longitude={longitude}
-            />
-          </div>
-        )}
+        {showCalendar && !isLoading && <div className="px-3 sm:px-6 pb-12 sm:pb-20">
+            <LunarCalendarGrid year={year} latitude={latitude} longitude={longitude} />
+          </div>}
       </div>
-    </div>
-  );
+    </div>;
 }
