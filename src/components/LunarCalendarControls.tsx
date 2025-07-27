@@ -53,85 +53,96 @@ export function LunarCalendarControls({
   };
 
   return (
-    <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 items-end justify-center mb-4 sm:mb-6 md:mb-8 p-2 sm:p-3 md:p-4">
-      <div className="flex flex-col gap-1 sm:gap-2">
-        <Label htmlFor="year" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-          Year
-        </Label>
-        <Select value={year.toString()} onValueChange={(value) => setYear(parseInt(value))}>
-          <SelectTrigger className="w-24 sm:w-32 md:w-40 bg-lunar-surface border-border">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {years.map((y) => (
-              <SelectItem key={y} value={y.toString()}>
-                {y}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+    <div className="space-y-5">
+      {/* Primary Controls Row */}
+      <div className="grid grid-cols-2 gap-4">
+        {/* Year Selector */}
+        <div className="space-y-2">
+          <Label htmlFor="year" className="text-sm font-light text-muted-foreground/80">
+            Year
+          </Label>
+          <Select value={year.toString()} onValueChange={(value) => setYear(parseInt(value))}>
+            <SelectTrigger className="w-full h-11 bg-lunar-surface/50 border-border/30">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {years.map((y) => (
+                <SelectItem key={y} value={y.toString()}>
+                  {y}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Location Selector */}
+        <div className="space-y-2">
+          <Label htmlFor="location" className="text-sm font-light text-muted-foreground/80">
+            Location
+          </Label>
+          <Select value={selectedLocation} onValueChange={handleLocationChange}>
+            <SelectTrigger className="w-full h-11 bg-lunar-surface/50 border-border/30">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {PRESET_LOCATIONS.map((location) => (
+                <SelectItem key={location.value} value={location.value}>
+                  {location.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
-      <div className="flex flex-col gap-1 sm:gap-2">
-        <Label htmlFor="location" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-          Location
-        </Label>
-        <Select value={selectedLocation} onValueChange={handleLocationChange}>
-          <SelectTrigger className="w-24 sm:w-32 md:w-40 bg-lunar-surface border-border">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {PRESET_LOCATIONS.map((location) => (
-              <SelectItem key={location.value} value={location.value}>
-                {location.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      {/* Coordinate Inputs - Only show when custom is selected */}
+      {selectedLocation === 'custom' && (
+        <div className="grid grid-cols-2 gap-4 pt-3 border-t border-border/20">
+          <div className="space-y-2">
+            <Label htmlFor="latitude" className="text-xs font-light text-muted-foreground/70">
+              Latitude
+            </Label>
+            <Input
+              id="latitude"
+              type="number"
+              step="0.0001"
+              value={latitude}
+              onChange={(e) => {
+                setLatitude(parseFloat(e.target.value) || 0);
+                handleCoordinateChange();
+              }}
+              className="w-full h-11 bg-lunar-surface/50 border-border/30"
+              placeholder="40.7128"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="longitude" className="text-xs font-light text-muted-foreground/70">
+              Longitude
+            </Label>
+            <Input
+              id="longitude"
+              type="number"
+              step="0.0001"
+              value={longitude}
+              onChange={(e) => {
+                setLongitude(parseFloat(e.target.value) || 0);
+                handleCoordinateChange();
+              }}
+              className="w-full h-11 bg-lunar-surface/50 border-border/30"
+              placeholder="-74.0060"
+            />
+          </div>
+        </div>
+      )}
 
-      <div className="flex flex-col gap-1 sm:gap-2">
-        <Label htmlFor="latitude" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-          Lat
-        </Label>
-        <Input
-          id="latitude"
-          type="number"
-          step="0.0001"
-          value={latitude}
-          onChange={(e) => {
-            setLatitude(parseFloat(e.target.value) || 0);
-            handleCoordinateChange();
-          }}
-          className="w-24 sm:w-32 md:w-40 bg-lunar-surface border-border"
-          placeholder="40.7128"
-        />
-      </div>
-
-      <div className="flex flex-col gap-1 sm:gap-2">
-        <Label htmlFor="longitude" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-          Lng
-        </Label>
-        <Input
-          id="longitude"
-          type="number"
-          step="0.0001"
-          value={longitude}
-          onChange={(e) => {
-            setLongitude(parseFloat(e.target.value) || 0);
-            handleCoordinateChange();
-          }}
-          className="w-24 sm:w-32 md:w-40 bg-lunar-surface border-border"
-          placeholder="-74.0060"
-        />
-      </div>
-
+      {/* Generate Button */}
       <Button 
         onClick={onGenerate} 
         disabled={isLoading}
-        className="w-24 sm:w-32 md:w-40 px-2 sm:px-4 md:px-6 py-2 font-medium tracking-wider uppercase bg-primary text-primary-foreground hover:bg-primary/90"
+        className="w-full h-12 mt-6 font-light tracking-wide bg-primary/90 text-primary-foreground hover:bg-primary"
+        size="lg"
       >
-        {isLoading ? 'Gen...' : 'Generate'}
+        {isLoading ? 'Generating...' : 'Generate'}
       </Button>
     </div>
   );

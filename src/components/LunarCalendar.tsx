@@ -61,47 +61,61 @@ export function LunarCalendar() {
 
   return (
     <div className="min-h-screen bg-gradient-lunar text-foreground">
-      <div className="max-w-6xl mx-auto p-2 sm:p-4 md:p-8">
-        {/* Header */}
-        <div className="text-center mb-4 sm:mb-6 md:mb-8">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[0.1em] sm:tracking-[0.2em] text-foreground mb-2 sm:mb-4 uppercase font-mono">
-            Lunar Calendar
-          </h1>
+      <div className="max-w-5xl mx-auto">
+        {/* Header Section */}
+        <div className="px-4 sm:px-6 pt-12 sm:pt-20 pb-8 sm:pb-16">
+          <div className="text-center space-y-8 sm:space-y-12">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extralight tracking-[0.15em] text-foreground">
+              Lunar Calendar
+            </h1>
+            
+            {/* Controls */}
+            <div className="max-w-sm mx-auto">
+              <LunarCalendarControls
+                year={year}
+                setYear={setYear}
+                latitude={latitude}
+                setLatitude={setLatitude}
+                longitude={longitude}
+                setLongitude={setLongitude}
+                selectedLocation={selectedLocation}
+                setSelectedLocation={setSelectedLocation}
+                onGenerate={generateCalendar}
+                isLoading={isLoading}
+              />
+            </div>
+
+            {/* Calendar Title */}
+            {showCalendar && !isLoading && (
+              <div className="space-y-2">
+                <h2 className="text-xl sm:text-2xl font-light text-foreground">
+                  {calendarTitle.split(' | ')[0]} {/* Just year */}
+                </h2>
+                {calendarTitle.includes(' | ') && (
+                  <div className="space-y-1">
+                    <p className="text-base sm:text-lg text-muted-foreground">
+                      {calendarTitle.split(' | ')[1].split(' (')[0]} {/* Location name */}
+                    </p>
+                    <p className="text-xs text-muted-foreground/60 font-mono">
+                      {calendarTitle.match(/\(([^)]+)\)/)?.[1]} {/* Coordinates */}
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Loading State */}
+            {isLoading && (
+              <p className="text-muted-foreground font-light text-lg">
+                Calculating lunar phases...
+              </p>
+            )}
+          </div>
         </div>
 
-        {/* Controls */}
-        <LunarCalendarControls
-          year={year}
-          setYear={setYear}
-          latitude={latitude}
-          setLatitude={setLatitude}
-          longitude={longitude}
-          setLongitude={setLongitude}
-          selectedLocation={selectedLocation}
-          setSelectedLocation={setSelectedLocation}
-          onGenerate={generateCalendar}
-          isLoading={isLoading}
-        />
-
-        {/* Loading State */}
-        {isLoading && (
-          <div className="text-center py-8 sm:py-12 md:py-20">
-            <div className="text-sm sm:text-base md:text-lg text-muted-foreground animate-pulse">
-              Calculating lunar phases
-              <span className="animate-pulse">...</span>
-            </div>
-          </div>
-        )}
-
-        {/* Calendar */}
+        {/* Calendar Display */}
         {showCalendar && !isLoading && (
-          <div className="mt-4 sm:mt-6 md:mt-8">
-            <div className="text-center mb-3 sm:mb-4 md:mb-6">
-              <h2 className="text-sm sm:text-base md:text-xl font-light tracking-wider text-foreground font-mono px-2">
-                {calendarTitle}
-              </h2>
-            </div>
-            
+          <div className="px-3 sm:px-6 pb-12 sm:pb-20">
             <LunarCalendarGrid
               year={year}
               latitude={latitude}
