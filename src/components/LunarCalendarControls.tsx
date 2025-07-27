@@ -2,7 +2,12 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Check, ChevronsUpDown, MapPin } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { PRESET_LOCATIONS, generateYearOptions } from "@/utils/lunar-calculations";
+import { useState } from "react";
 
 interface LunarCalendarControlsProps {
   year: number;
@@ -30,6 +35,8 @@ export function LunarCalendarControls({
   isLoading
 }: LunarCalendarControlsProps) {
   const years = generateYearOptions();
+  const [open, setOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
   const handleLocationChange = (value: string) => {
     setSelectedLocation(value);
@@ -74,18 +81,63 @@ export function LunarCalendarControls({
 
         {/* Location Selector */}
         <div>
-          <Select value={selectedLocation} onValueChange={handleLocationChange}>
-            <SelectTrigger className="w-full h-12 bg-lunar-surface/50 border-border/30">
-              <SelectValue placeholder="Select location" />
-            </SelectTrigger>
-            <SelectContent>
-              {PRESET_LOCATIONS.map((location) => (
-                <SelectItem key={location.value} value={location.value}>
-                  {location.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={open}
+                className="w-full h-12 justify-between bg-lunar-surface/50 border-border/30 font-normal"
+              >
+                {selectedLocation !== 'custom' && selectedLocation
+                  ? PRESET_LOCATIONS.find((location) => location.value === selectedLocation)?.label
+                  : selectedLocation === 'custom'
+                  ? "Custom Location"
+                  : "Search cities..."}
+                <div className="flex items-center gap-1">
+                  <MapPin className="h-4 w-4 opacity-50" />
+                  <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
+                </div>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-full p-0" align="start">
+              <Command>
+                <CommandInput 
+                  placeholder="Search cities..." 
+                  value={searchValue}
+                  onValueChange={setSearchValue}
+                />
+                <CommandList>
+                  <CommandEmpty>No cities found.</CommandEmpty>
+                  <CommandGroup>
+                    {PRESET_LOCATIONS
+                      .filter((location) => 
+                        location.label.toLowerCase().includes(searchValue.toLowerCase())
+                      )
+                      .map((location) => (
+                        <CommandItem
+                          key={location.value}
+                          value={location.value}
+                          onSelect={(currentValue) => {
+                            handleLocationChange(currentValue);
+                            setOpen(false);
+                            setSearchValue("");
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              selectedLocation === location.value ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                          {location.label}
+                        </CommandItem>
+                      ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
 
