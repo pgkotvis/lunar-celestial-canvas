@@ -55,15 +55,12 @@ export function LunarCalendarControls({
   return (
     <div className="space-y-5">
       {/* Primary Controls Row */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-6">
         {/* Year Selector */}
-        <div className="space-y-2">
-          <Label htmlFor="year" className="text-sm font-light text-muted-foreground/80">
-            Year
-          </Label>
+        <div>
           <Select value={year.toString()} onValueChange={(value) => setYear(parseInt(value))}>
-            <SelectTrigger className="w-full h-11 bg-lunar-surface/50 border-border/30">
-              <SelectValue />
+            <SelectTrigger className="w-full h-12 bg-lunar-surface/50 border-border/30">
+              <SelectValue placeholder="Select year" />
             </SelectTrigger>
             <SelectContent>
               {years.map((y) => (
@@ -76,13 +73,10 @@ export function LunarCalendarControls({
         </div>
 
         {/* Location Selector */}
-        <div className="space-y-2">
-          <Label htmlFor="location" className="text-sm font-light text-muted-foreground/80">
-            Location
-          </Label>
+        <div>
           <Select value={selectedLocation} onValueChange={handleLocationChange}>
-            <SelectTrigger className="w-full h-11 bg-lunar-surface/50 border-border/30">
-              <SelectValue />
+            <SelectTrigger className="w-full h-12 bg-lunar-surface/50 border-border/30">
+              <SelectValue placeholder="Select location" />
             </SelectTrigger>
             <SelectContent>
               {PRESET_LOCATIONS.map((location) => (
@@ -97,41 +91,31 @@ export function LunarCalendarControls({
 
       {/* Coordinate Inputs - Only show when custom is selected */}
       {selectedLocation === 'custom' && (
-        <div className="grid grid-cols-2 gap-4 pt-3 border-t border-border/20">
-          <div className="space-y-2">
-            <Label htmlFor="latitude" className="text-xs font-light text-muted-foreground/70">
-              Latitude
-            </Label>
-            <Input
-              id="latitude"
-              type="number"
-              step="0.0001"
-              value={latitude}
-              onChange={(e) => {
-                setLatitude(parseFloat(e.target.value) || 0);
-                handleCoordinateChange();
-              }}
-              className="w-full h-11 bg-lunar-surface/50 border-border/30"
-              placeholder="40.7128"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="longitude" className="text-xs font-light text-muted-foreground/70">
-              Longitude
-            </Label>
-            <Input
-              id="longitude"
-              type="number"
-              step="0.0001"
-              value={longitude}
-              onChange={(e) => {
-                setLongitude(parseFloat(e.target.value) || 0);
-                handleCoordinateChange();
-              }}
-              className="w-full h-11 bg-lunar-surface/50 border-border/30"
-              placeholder="-74.0060"
-            />
-          </div>
+        <div className="grid grid-cols-2 gap-6 pt-6 border-t border-border/20">
+          <Input
+            id="latitude"
+            type="number"
+            step="0.0001"
+            value={latitude}
+            onChange={(e) => {
+              setLatitude(parseFloat(e.target.value) || 0);
+              handleCoordinateChange();
+            }}
+            className="w-full h-12 bg-lunar-surface/50 border-border/30"
+            placeholder="Latitude (e.g., 40.7128)"
+          />
+          <Input
+            id="longitude"
+            type="number"
+            step="0.0001"
+            value={longitude}
+            onChange={(e) => {
+              setLongitude(parseFloat(e.target.value) || 0);
+              handleCoordinateChange();
+            }}
+            className="w-full h-12 bg-lunar-surface/50 border-border/30"
+            placeholder="Longitude (e.g., -74.0060)"
+          />
         </div>
       )}
 
