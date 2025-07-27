@@ -89,9 +89,12 @@ export function LunarCalendarControls({
         </div>
       </div>
 
-      {/* Coordinate Inputs - Only show when custom is selected */}
-      {selectedLocation === 'custom' && (
-        <div className="grid grid-cols-2 gap-6 pt-6 border-t border-border/20">
+      {/* Coordinate Inputs - Always visible, editable only when custom is selected */}
+      <div className="grid grid-cols-2 gap-6 pt-6 border-t border-border/20">
+        <div>
+          <Label htmlFor="latitude" className="text-sm text-muted-foreground mb-2 block">
+            Latitude
+          </Label>
           <Input
             id="latitude"
             type="number"
@@ -101,9 +104,19 @@ export function LunarCalendarControls({
               setLatitude(parseFloat(e.target.value) || 0);
               handleCoordinateChange();
             }}
-            className="w-full h-12 bg-lunar-surface/50 border-border/30"
+            readOnly={selectedLocation !== 'custom'}
+            className={`w-full h-12 border-border/30 ${
+              selectedLocation !== 'custom' 
+                ? 'bg-muted/30 text-muted-foreground cursor-not-allowed' 
+                : 'bg-lunar-surface/50'
+            }`}
             placeholder="Latitude (e.g., 40.7128)"
           />
+        </div>
+        <div>
+          <Label htmlFor="longitude" className="text-sm text-muted-foreground mb-2 block">
+            Longitude
+          </Label>
           <Input
             id="longitude"
             type="number"
@@ -113,11 +126,16 @@ export function LunarCalendarControls({
               setLongitude(parseFloat(e.target.value) || 0);
               handleCoordinateChange();
             }}
-            className="w-full h-12 bg-lunar-surface/50 border-border/30"
+            readOnly={selectedLocation !== 'custom'}
+            className={`w-full h-12 border-border/30 ${
+              selectedLocation !== 'custom' 
+                ? 'bg-muted/30 text-muted-foreground cursor-not-allowed' 
+                : 'bg-lunar-surface/50'
+            }`}
             placeholder="Longitude (e.g., -74.0060)"
           />
         </div>
-      )}
+      </div>
 
       {/* Generate Button */}
       <Button 
