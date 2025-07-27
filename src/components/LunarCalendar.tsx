@@ -61,10 +61,10 @@ export function LunarCalendar() {
 
   return (
     <div className="min-h-screen bg-gradient-lunar text-foreground">
-      <div className="max-w-6xl mx-auto p-8">
+      <div className="max-w-6xl mx-auto p-2 sm:p-4 md:p-8">
         {/* Header */}
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-light tracking-[0.2em] text-foreground mb-4 uppercase font-mono">
+        <div className="text-center mb-4 sm:mb-6 md:mb-8">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[0.1em] sm:tracking-[0.2em] text-foreground mb-2 sm:mb-4 uppercase font-mono">
             Lunar Calendar
           </h1>
         </div>
@@ -85,8 +85,8 @@ export function LunarCalendar() {
 
         {/* Loading State */}
         {isLoading && (
-          <div className="text-center py-20">
-            <div className="text-lg text-muted-foreground animate-pulse">
+          <div className="text-center py-8 sm:py-12 md:py-20">
+            <div className="text-sm sm:text-base md:text-lg text-muted-foreground animate-pulse">
               Calculating lunar phases
               <span className="animate-pulse">...</span>
             </div>
@@ -95,9 +95,9 @@ export function LunarCalendar() {
 
         {/* Calendar */}
         {showCalendar && !isLoading && (
-          <div className="bg-card border border-border p-8 shadow-lunar">
-            <div className="text-center mb-8">
-              <h2 className="text-xl font-light tracking-wider text-foreground font-mono">
+          <div className="mt-4 sm:mt-6 md:mt-8">
+            <div className="text-center mb-3 sm:mb-4 md:mb-6">
+              <h2 className="text-sm sm:text-base md:text-xl font-light tracking-wider text-foreground font-mono px-2">
                 {calendarTitle}
               </h2>
             </div>

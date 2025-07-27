@@ -53,13 +53,13 @@ export function LunarCalendarControls({
   };
 
   return (
-    <div className="flex flex-wrap gap-4 items-end justify-center mb-12 p-6 bg-card border">
-      <div className="flex flex-col gap-2">
+    <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 items-end justify-center mb-4 sm:mb-6 md:mb-8 p-2 sm:p-3 md:p-4">
+      <div className="flex flex-col gap-1 sm:gap-2">
         <Label htmlFor="year" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
           Year
         </Label>
         <Select value={year.toString()} onValueChange={(value) => setYear(parseInt(value))}>
-          <SelectTrigger className="w-40 bg-lunar-surface border-border">
+          <SelectTrigger className="w-24 sm:w-32 md:w-40 bg-lunar-surface border-border">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -72,12 +72,12 @@ export function LunarCalendarControls({
         </Select>
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1 sm:gap-2">
         <Label htmlFor="location" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
           Location
         </Label>
         <Select value={selectedLocation} onValueChange={handleLocationChange}>
-          <SelectTrigger className="w-40 bg-lunar-surface border-border">
+          <SelectTrigger className="w-24 sm:w-32 md:w-40 bg-lunar-surface border-border">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -90,9 +90,9 @@ export function LunarCalendarControls({
         </Select>
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1 sm:gap-2">
         <Label htmlFor="latitude" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-          Latitude
+          Lat
         </Label>
         <Input
           id="latitude"
@@ -103,14 +103,14 @@ export function LunarCalendarControls({
             setLatitude(parseFloat(e.target.value) || 0);
             handleCoordinateChange();
           }}
-          className="w-40 bg-lunar-surface border-border"
+          className="w-24 sm:w-32 md:w-40 bg-lunar-surface border-border"
           placeholder="40.7128"
         />
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1 sm:gap-2">
         <Label htmlFor="longitude" className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-          Longitude
+          Lng
         </Label>
         <Input
           id="longitude"
@@ -121,7 +121,7 @@ export function LunarCalendarControls({
             setLongitude(parseFloat(e.target.value) || 0);
             handleCoordinateChange();
           }}
-          className="w-40 bg-lunar-surface border-border"
+          className="w-24 sm:w-32 md:w-40 bg-lunar-surface border-border"
           placeholder="-74.0060"
         />
       </div>
@@ -129,9 +129,9 @@ export function LunarCalendarControls({
       <Button 
         onClick={onGenerate} 
         disabled={isLoading}
-        className="w-40 px-6 py-2 font-medium tracking-wider uppercase bg-primary text-primary-foreground hover:bg-primary/90"
+        className="w-24 sm:w-32 md:w-40 px-2 sm:px-4 md:px-6 py-2 font-medium tracking-wider uppercase bg-primary text-primary-foreground hover:bg-primary/90"
       >
-        {isLoading ? 'Generating...' : 'Generate'}
+        {isLoading ? 'Gen...' : 'Generate'}
       </Button>
     </div>
   );

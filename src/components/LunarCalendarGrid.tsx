@@ -47,20 +47,21 @@ export function LunarCalendarGrid({ year, latitude, longitude }: LunarCalendarGr
   return (
     <div className="relative">
       {/* Month Labels */}
-      <div className="grid grid-cols-12 gap-px mb-5 text-center">
+      <div className="grid grid-cols-12 gap-px mb-2 sm:mb-3 md:mb-5 text-center">
         {MONTH_NAMES.map((month, index) => (
           <div 
             key={index} 
-            className="text-xs font-medium py-2 px-1 text-muted-foreground uppercase tracking-wider"
+            className="text-xs sm:text-sm font-medium py-1 sm:py-2 px-1 text-muted-foreground uppercase tracking-wider"
           >
-            {month}
+            <span className="hidden sm:inline">{month}</span>
+            <span className="sm:hidden">{month.slice(0, 3)}</span>
           </div>
         ))}
       </div>
 
       {/* Calendar Grid: 12 columns (months) x maxDays rows (days) */}
       <div 
-        className="grid grid-cols-12 gap-px bg-lunar-shadow p-px max-w-full mx-auto shadow-lunar"
+        className="grid grid-cols-12 gap-px bg-lunar-shadow p-px max-w-full mx-auto"
         style={{ gridTemplateRows: `repeat(${maxDays}, 1fr)` }}
       >
         {/* Generate grid: for each day (row) and each month (column) */}
@@ -79,7 +80,7 @@ export function LunarCalendarGrid({ year, latitude, longitude }: LunarCalendarGr
               return (
                 <div
                   key={key}
-                  className="aspect-square min-h-[12px] transition-all duration-150 cursor-pointer hover:scale-110 hover:z-10 hover:border hover:border-primary relative"
+                  className="aspect-square min-h-[8px] sm:min-h-[10px] md:min-h-[12px] transition-all duration-150 cursor-pointer hover:scale-110 hover:z-10 hover:border hover:border-primary relative"
                   style={{
                     backgroundColor: `rgb(${grayValue}, ${grayValue}, ${grayValue})`,
                     color: grayValue > 127 ? 'black' : 'white'
@@ -94,7 +95,7 @@ export function LunarCalendarGrid({ year, latitude, longitude }: LunarCalendarGr
               return (
                 <div
                   key={key}
-                  className="aspect-square min-h-[12px] bg-transparent"
+                  className="aspect-square min-h-[8px] sm:min-h-[10px] md:min-h-[12px] bg-transparent"
                 />
               );
             }
