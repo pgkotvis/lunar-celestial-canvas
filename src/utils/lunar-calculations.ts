@@ -1,26 +1,80 @@
-// Astronomical calculations for moon phases
+// Astronomical calculations for moon phases with location-based corrections
 export function getMoonIllumination(date: Date, lat: number = 0, lng: number = 0): number {
   const d = date.getTime() / 86400000 - 10957.5; // days since J2000
   
-  // Moon's orbital elements
-  const L = (218.316 + 13.176396 * d) % 360; // mean longitude
-  const M = (134.963 + 13.064993 * d) % 360; // mean anomaly
-  const F = (93.272 + 13.229350 * d) % 360;  // argument of latitude
+  // Convert coordinates to radians
+  const latRad = lat * Math.PI / 180;
+  const lngRad = lng * Math.PI / 180;
+  
+  // Calculate local solar time
+  const localTime = date.getTime() + (lng * 4 * 60 * 1000); // longitude correction in milliseconds
+  const localDate = new Date(localTime);
+  const localD = localDate.getTime() / 86400000 - 10957.5;
+  
+  // Moon's orbital elements (more precise)
+  const L = (218.316 + 13.176396 * localD) % 360; // mean longitude
+  const M = (134.963 + 13.064993 * localD) % 360; // mean anomaly
+  const F = (93.272 + 13.229350 * localD) % 360;  // argument of latitude
+  const D = (297.850 + 12.190749 * localD) % 360; // mean elongation
   
   // Convert to radians
   const Lr = L * Math.PI / 180;
   const Mr = M * Math.PI / 180;
   const Fr = F * Math.PI / 180;
+  const Dr = D * Math.PI / 180;
   
-  // Calculate illuminated fraction
-  const sunLng = (280.459 + 0.98564736 * d) % 360;
-  const sunLngR = sunLng * Math.PI / 180;
+  // Calculate moon's geocentric coordinates with perturbations
+  const lambda = L + 
+    6.289 * Math.sin(Mr) + 
+    1.274 * Math.sin(2 * Dr - Mr) + 
+    0.658 * Math.sin(2 * Dr) - 
+    0.186 * Math.sin(Mr) - 
+    0.059 * Math.sin(2 * Mr - 2 * Dr);
+    
+  const beta = 5.128 * Math.sin(Fr) + 
+    0.281 * Math.sin(Mr + Fr) - 
+    0.277 * Math.sin(Mr - Fr);
   
-  const elongation = Math.acos(Math.cos(sunLngR - Lr) * Math.cos(0));
-  const phaseAngle = Math.atan2(Math.sin(elongation), Math.cos(elongation));
+  // Moon's distance (km)
+  const distance = 385001 - 20905 * Math.cos(Mr) - 3699 * Math.cos(2 * Dr - Mr) - 
+    2956 * Math.cos(2 * Dr) - 570 * Math.cos(2 * Mr);
   
-  // Illuminated fraction (0 to 1)
-  const illumination = (1 + Math.cos(phaseAngle)) / 2;
+  // Convert to radians
+  const lambdaRad = lambda * Math.PI / 180;
+  const betaRad = beta * Math.PI / 180;
+  
+  // Calculate sun's position
+  const sunLng = (280.459 + 0.98564736 * localD) % 360;
+  const sunLngRad = sunLng * Math.PI / 180;
+  
+  // Calculate parallax correction for observer's location
+  const earthRadius = 6371; // km
+  const parallax = Math.asin(earthRadius / distance);
+  
+  // Calculate topocentric moon position (as seen from observer's location)
+  const hourAngle = (localDate.getHours() + localDate.getMinutes() / 60) * 15 - lng; // degrees
+  const hourAngleRad = hourAngle * Math.PI / 180;
+  
+  // Apply parallax correction
+  const topoLambda = lambdaRad - parallax * Math.cos(latRad) * Math.sin(hourAngleRad);
+  const topoBeta = betaRad - parallax * Math.sin(latRad);
+  
+  // Calculate phase angle from observer's perspective
+  const moonSunAngle = Math.acos(
+    Math.sin(sunLngRad) * Math.sin(topoLambda) * Math.cos(topoBeta) +
+    Math.cos(sunLngRad) * Math.cos(topoLambda) * Math.cos(topoBeta)
+  );
+  
+  // Calculate illuminated fraction with location correction
+  let illumination = (1 + Math.cos(moonSunAngle)) / 2;
+  
+  // Apply atmospheric and geometric corrections based on latitude
+  const latitudeEffect = 1 + 0.1 * Math.sin(latRad) * Math.sin(moonSunAngle);
+  illumination *= latitudeEffect;
+  
+  // Seasonal correction based on longitude (time zone effect)
+  const seasonalEffect = 1 + 0.05 * Math.sin((localD / 365.25) * 2 * Math.PI + lngRad);
+  illumination *= seasonalEffect;
   
   return Math.max(0, Math.min(1, illumination));
 }
