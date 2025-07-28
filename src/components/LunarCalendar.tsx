@@ -76,10 +76,13 @@ export function LunarCalendar() {
             </div>
 
             {/* Calendar Title */}
-            {showCalendar && !isLoading && <div className="space-y-2">
-                
-                {calendarTitle.includes(' | ')}
-              </div>}
+            <div className="space-y-2 min-h-[2.5rem] flex items-center justify-center">
+              {showCalendar && !isLoading && calendarTitle && (
+                <h2 className="text-lg sm:text-xl font-light text-muted-foreground">
+                  {calendarTitle}
+                </h2>
+              )}
+            </div>
 
             {/* Loading State */}
             {isLoading && <p className="text-muted-foreground font-light text-lg">
