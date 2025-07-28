@@ -47,7 +47,7 @@ export function LunarCalendarGrid({ year, latitude, longitude }: LunarCalendarGr
   return (
     <div className="relative max-w-4xl mx-auto">
       {/* Month Labels */}
-      <div className="grid grid-cols-12 gap-0.5 mb-6 sm:mb-8 text-center">
+      <div className="grid grid-cols-12 gap-0.5 mb-3 sm:mb-4 text-center">
         {MONTH_NAMES.map((month, index) => (
           <div 
             key={index} 

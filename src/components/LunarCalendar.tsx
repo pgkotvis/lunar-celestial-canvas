@@ -48,22 +48,31 @@ export function LunarCalendar() {
     }
   };
 
-  // Generate calendar on component mount
+  // Auto-generate calendar when year or location changes
   useEffect(() => {
     generateCalendar();
-  }, []);
+  }, [year, latitude, longitude]);
   return <div className="min-h-screen bg-gradient-lunar text-foreground">
       <div className="max-w-5xl mx-auto">
         {/* Header Section */}
-        <div className="px-4 sm:px-6 pt-12 sm:pt-20 pb-8 sm:pb-16 py-[28px]">
-          <div className="text-center space-y-8 sm:space-y-12">
+        <div className="px-4 sm:px-6 pt-8 sm:pt-12 pb-4 sm:pb-6">
+          <div className="text-center space-y-4 sm:space-y-6">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extralight tracking-[0.15em] text-foreground">
               Lunar Calendar
             </h1>
             
             {/* Controls */}
             <div className="max-w-sm mx-auto">
-              <LunarCalendarControls year={year} setYear={setYear} latitude={latitude} setLatitude={setLatitude} longitude={longitude} setLongitude={setLongitude} selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation} onGenerate={generateCalendar} isLoading={isLoading} />
+              <LunarCalendarControls 
+                year={year} 
+                setYear={setYear} 
+                latitude={latitude} 
+                setLatitude={setLatitude} 
+                longitude={longitude} 
+                setLongitude={setLongitude} 
+                selectedLocation={selectedLocation} 
+                setSelectedLocation={setSelectedLocation} 
+              />
             </div>
 
             {/* Calendar Title */}

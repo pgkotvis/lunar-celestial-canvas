@@ -13,8 +13,6 @@ interface LunarCalendarControlsProps {
   setLongitude: (lng: number) => void;
   selectedLocation: string;
   setSelectedLocation: (location: string) => void;
-  onGenerate: () => void;
-  isLoading: boolean;
 }
 
 export function LunarCalendarControls({
@@ -25,9 +23,7 @@ export function LunarCalendarControls({
   longitude,
   setLongitude,
   selectedLocation,
-  setSelectedLocation,
-  onGenerate,
-  isLoading
+  setSelectedLocation
 }: LunarCalendarControlsProps) {
   const years = generateYearOptions();
 
@@ -53,13 +49,13 @@ export function LunarCalendarControls({
   };
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       {/* Primary Controls Row */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-4">
         {/* Year Selector */}
         <div>
           <Select value={year.toString()} onValueChange={(value) => setYear(parseInt(value))}>
-            <SelectTrigger className="w-full h-12 bg-lunar-surface/50 border-border/30">
+            <SelectTrigger className="w-full h-10 bg-lunar-surface/50 border-border/30">
               <SelectValue placeholder="Select year" />
             </SelectTrigger>
             <SelectContent>
@@ -75,7 +71,7 @@ export function LunarCalendarControls({
         {/* Location Selector */}
         <div>
           <Select value={selectedLocation} onValueChange={handleLocationChange}>
-            <SelectTrigger className="w-full h-12 bg-lunar-surface/50 border-border/30">
+            <SelectTrigger className="w-full h-10 bg-lunar-surface/50 border-border/30">
               <SelectValue placeholder="Select location" />
             </SelectTrigger>
             <SelectContent>
@@ -90,7 +86,7 @@ export function LunarCalendarControls({
       </div>
 
       {/* Coordinate Inputs - Always visible, editable only when custom is selected */}
-      <div className="grid grid-cols-2 gap-6 pt-6 border-t border-border/20">
+      <div className="grid grid-cols-2 gap-4 pt-3 border-t border-border/20">
         <div>
           <Label htmlFor="latitude" className="text-sm text-muted-foreground mb-2 block">
             Latitude
@@ -105,7 +101,7 @@ export function LunarCalendarControls({
               handleCoordinateChange();
             }}
             readOnly={selectedLocation !== 'custom'}
-            className={`w-full h-12 border-border/30 ${
+            className={`w-full h-10 border-border/30 ${
               selectedLocation !== 'custom' 
                 ? 'bg-muted/30 text-muted-foreground cursor-not-allowed' 
                 : 'bg-lunar-surface/50'
@@ -127,7 +123,7 @@ export function LunarCalendarControls({
               handleCoordinateChange();
             }}
             readOnly={selectedLocation !== 'custom'}
-            className={`w-full h-12 border-border/30 ${
+            className={`w-full h-10 border-border/30 ${
               selectedLocation !== 'custom' 
                 ? 'bg-muted/30 text-muted-foreground cursor-not-allowed' 
                 : 'bg-lunar-surface/50'
@@ -136,16 +132,6 @@ export function LunarCalendarControls({
           />
         </div>
       </div>
-
-      {/* Generate Button */}
-      <Button 
-        onClick={onGenerate} 
-        disabled={isLoading}
-        className="w-full h-12 mt-6 font-light tracking-wide bg-primary/90 text-primary-foreground hover:bg-primary"
-        size="lg"
-      >
-        {isLoading ? 'Generating...' : 'Generate'}
-      </Button>
     </div>
   );
 }
