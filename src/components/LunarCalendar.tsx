@@ -57,7 +57,7 @@ export function LunarCalendar() {
         {/* Header Section */}
         <div className="px-4 sm:px-6 pt-8 sm:pt-12 pb-4 sm:pb-6">
           <div className="text-center space-y-4 sm:space-y-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extralight tracking-[0.15em] text-foreground">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extralight tracking-[0.15em] text-foreground">
               Lunar Calendar
             </h1>
             
