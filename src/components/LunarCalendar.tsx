@@ -75,13 +75,9 @@ export function LunarCalendar() {
               />
             </div>
 
-            {/* Calendar Title */}
+            {/* Calendar Title - Hidden but space reserved to prevent layout shift */}
             <div className="space-y-2 min-h-[2.5rem] flex items-center justify-center">
-              {showCalendar && !isLoading && calendarTitle && (
-                <h2 className="text-lg sm:text-xl font-light text-muted-foreground">
-                  {calendarTitle}
-                </h2>
-              )}
+              {/* Title content removed but container kept for layout stability */}
             </div>
 
             {/* Loading State */}
