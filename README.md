@@ -1,73 +1,22 @@
-# Welcome to your Lovable project
+# Lunar Calendar 
+An interactive web app that visualizes moon illumination for every day of a chosen year and location.
 
-## Project info
+**URL**: https://lunar-cal.com/
 
-**URL**: https://lovable.dev/projects/b9c4b51a-a6ad-4f5c-95a8-d40bc6286289
+## Features
+Year & location controls – Choose from preset cities or enter custom coordinates; the calendar and title update automatically when inputs change
 
-## How can I edit this code?
+Reverse geocoding – Custom coordinates are translated into human‑readable place names via the OpenStreetMap API
 
-There are several ways of editing your application.
+Interactive lunar grid – Each day is shaded by moon illumination with tooltips showing the date, illumination percentage, and phase name
 
-**Use Lovable**
+Responsive UI – Built with Tailwind CSS and shadcn/Radix components for a cohesive lunar‑themed design
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b9c4b51a-a6ad-4f5c-95a8-d40bc6286289) and start prompting.
+Data handling & routing – Uses React Query for data management and React Router for navigation
 
-Changes made via Lovable will be committed automatically to this repo.
+## Tech Stack
+Core: React, TypeScript, Vite
 
-**Use your preferred IDE**
+Styling: Tailwind CSS with utility helpers and shadcn UI components
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/b9c4b51a-a6ad-4f5c-95a8-d40bc6286289) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Created with Lovable 
