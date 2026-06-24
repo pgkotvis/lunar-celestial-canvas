@@ -1,137 +1,32 @@
-import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { PRESET_LOCATIONS, generateYearOptions } from "@/utils/lunar-calculations";
+import { generateYearOptions } from "@/utils/lunar-calculations";
 
 interface LunarCalendarControlsProps {
   year: number;
   setYear: (year: number) => void;
-  latitude: number;
-  setLatitude: (lat: number) => void;
-  longitude: number;
-  setLongitude: (lng: number) => void;
-  selectedLocation: string;
-  setSelectedLocation: (location: string) => void;
 }
 
 export function LunarCalendarControls({
   year,
   setYear,
-  latitude,
-  setLatitude,
-  longitude,
-  setLongitude,
-  selectedLocation,
-  setSelectedLocation
 }: LunarCalendarControlsProps) {
   const years = generateYearOptions();
 
-  const handleLocationChange = (value: string) => {
-    setSelectedLocation(value);
-    if (value !== 'custom') {
-      const [lat, lng] = value.split(',');
-      setLatitude(parseFloat(lat));
-      setLongitude(parseFloat(lng));
-    }
-  };
-
-  const handleCoordinateChange = () => {
-    // Check if current coordinates match any preset location
-    const currentCoords = `${latitude},${longitude}`;
-    const matchingLocation = PRESET_LOCATIONS.find(loc => loc.value === currentCoords);
-    
-    if (matchingLocation) {
-      setSelectedLocation(matchingLocation.value);
-    } else {
-      setSelectedLocation('custom');
-    }
-  };
-
   return (
     <div className="space-y-3">
-      {/* Primary Controls Row */}
-      <div className="grid grid-cols-2 gap-4">
-        {/* Year Selector */}
-        <div>
-          <Select value={year.toString()} onValueChange={(value) => setYear(parseInt(value))}>
-            <SelectTrigger className="w-full h-10 bg-lunar-surface/50 border-border/30">
-              <SelectValue placeholder="Select year" />
-            </SelectTrigger>
-            <SelectContent>
-              {years.map((y) => (
-                <SelectItem key={y} value={y.toString()}>
-                  {y}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Location Selector */}
-        <div>
-          <Select value={selectedLocation} onValueChange={handleLocationChange}>
-            <SelectTrigger className="w-full h-10 bg-lunar-surface/50 border-border/30">
-              <SelectValue placeholder="Select location" />
-            </SelectTrigger>
-            <SelectContent>
-              {PRESET_LOCATIONS.map((location) => (
-                <SelectItem key={location.value} value={location.value}>
-                  {location.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      {/* Coordinate Inputs - Always visible, editable only when custom is selected */}
-      <div className="grid grid-cols-2 gap-4 pt-3 border-t border-border/20">
-        <div>
-          <Label htmlFor="latitude" className="text-sm text-muted-foreground mb-2 block">
-            Latitude
-          </Label>
-          <Input
-            id="latitude"
-            type="number"
-            step="0.0001"
-            value={latitude}
-            onChange={(e) => {
-              setLatitude(parseFloat(e.target.value) || 0);
-              handleCoordinateChange();
-            }}
-            readOnly={selectedLocation !== 'custom'}
-            className={`w-full h-10 border-border/30 ${
-              selectedLocation !== 'custom' 
-                ? 'bg-muted/30 text-muted-foreground cursor-not-allowed' 
-                : 'bg-lunar-surface/50'
-            }`}
-            placeholder="Latitude (e.g., 40.7128)"
-          />
-        </div>
-        <div>
-          <Label htmlFor="longitude" className="text-sm text-muted-foreground mb-2 block">
-            Longitude
-          </Label>
-          <Input
-            id="longitude"
-            type="number"
-            step="0.0001"
-            value={longitude}
-            onChange={(e) => {
-              setLongitude(parseFloat(e.target.value) || 0);
-              handleCoordinateChange();
-            }}
-            readOnly={selectedLocation !== 'custom'}
-            className={`w-full h-10 border-border/30 ${
-              selectedLocation !== 'custom' 
-                ? 'bg-muted/30 text-muted-foreground cursor-not-allowed' 
-                : 'bg-lunar-surface/50'
-            }`}
-            placeholder="Longitude (e.g., -74.0060)"
-          />
-        </div>
-      </div>
+      {/* Year Selector */}
+      <Select value={year.toString()} onValueChange={(value) => setYear(parseInt(value))}>
+        <SelectTrigger className="w-full h-10 bg-lunar-surface/50 border-border/30">
+          <SelectValue placeholder="Select year" />
+        </SelectTrigger>
+        <SelectContent>
+          {years.map((y) => (
+            <SelectItem key={y} value={y.toString()}>
+              {y}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </div>
   );
 }
