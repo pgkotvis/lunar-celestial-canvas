@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { LunarCalendarControls } from "./LunarCalendarControls";
 import { LunarCalendarGrid } from "./LunarCalendarGrid";
 export function LunarCalendar() {
-  const [year, setYear] = useState(2025);
+  const [year, setYear] = useState(2026);
   const [isLoading, setIsLoading] = useState(false);
   const [showCalendar, setShowCalendar] = useState(false);
   const generateCalendar = async () => {
