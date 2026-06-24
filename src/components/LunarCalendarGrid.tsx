@@ -3,8 +3,6 @@ import { getMoonIllumination, getMoonPhaseName, getDaysInMonth, MONTH_NAMES } fr
 
 interface LunarCalendarGridProps {
   year: number;
-  latitude: number;
-  longitude: number;
 }
 
 interface TooltipData {
@@ -15,7 +13,7 @@ interface TooltipData {
   phase: string;
 }
 
-export function LunarCalendarGrid({ year, latitude, longitude }: LunarCalendarGridProps) {
+export function LunarCalendarGrid({ year }: LunarCalendarGridProps) {
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
 
   // Find the maximum days in any month to set grid height
@@ -74,7 +72,7 @@ export function LunarCalendarGrid({ year, latitude, longitude }: LunarCalendarGr
             
             if (day <= daysInMonth) {
               const date = new Date(year, month, day);
-              const illumination = getMoonIllumination(date, latitude, longitude);
+              const illumination = getMoonIllumination(date);
               const grayValue = Math.round(illumination * 255);
               
               return (
