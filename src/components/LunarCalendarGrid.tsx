@@ -26,7 +26,7 @@ export function LunarCalendarGrid({ year }: LunarCalendarGridProps) {
   ) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const monthNames = MONTH_NAMES;
-    const formattedDate = monthNames[date.getMonth()] + ' ' + 
+    const formattedDate = monthNames[date.getMonth()] + ' ' +
                          String(date.getDate()).padStart(2, '0');
 
     setTooltip({
@@ -34,7 +34,7 @@ export function LunarCalendarGrid({ year }: LunarCalendarGridProps) {
       y: event.clientY - 50,
       date: formattedDate,
       illumination: (illumination * 100).toFixed(1),
-      phase: getMoonPhaseName(illumination)
+      phase: getMoonPhaseName(date)
     });
   };
 
