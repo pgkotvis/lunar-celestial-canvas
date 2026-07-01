@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://lunar-illumination-calendar.lovable.app/sitemap.xml
