@@ -6,19 +6,17 @@ export function getMoonIllumination(date: Date): number {
   return SunCalc.getMoonIllumination(date).fraction;
 }
 
+const PHASE_NAMES = [
+  "New Moon", "Waxing Crescent", "First Quarter", "Waxing Gibbous",
+  "Full Moon", "Waning Gibbous", "Last Quarter", "Waning Crescent",
+];
+
 // SunCalc's `phase` (0-1, 0/1 = new, 0.25 = first quarter, 0.5 = full,
 // 0.75 = last quarter) encodes waxing/waning direction, unlike illumination
 // fraction which is symmetric around the full moon and can't distinguish them.
 export function getMoonPhaseName(date: Date): string {
   const phase = SunCalc.getMoonIllumination(date).phase;
-  if (phase < 1 / 16 || phase >= 15 / 16) return "New Moon";
-  if (phase < 3 / 16) return "Waxing Crescent";
-  if (phase < 5 / 16) return "First Quarter";
-  if (phase < 7 / 16) return "Waxing Gibbous";
-  if (phase < 9 / 16) return "Full Moon";
-  if (phase < 11 / 16) return "Waning Gibbous";
-  if (phase < 13 / 16) return "Last Quarter";
-  return "Waning Crescent";
+  return PHASE_NAMES[Math.round(phase * 8) % 8];
 }
 
 export function isLeapYear(year: number): boolean {
